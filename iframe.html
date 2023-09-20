@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<style>
+    :root {
+        --palacio-color-amarillo: #ebb349;
+        --palacio-txt-negro : #181818;
+        --palacio-color-gris : #ebebeb;
+        --palacio-color-blanco: #ffffff;
+    }
+
+    body {
+        color: var(--palacio-txt-negro);
+    }
+
+    a {
+        text-decoration: none;
+        color: var(--palacio-txt-negro);
+    }
+
+    H3 {
+        text-decoration: none;
+        color: var(--palacio-txt-negro);
+        font-size: 20px;
+    }
+
+    H4 {
+        text-decoration: none;
+        color: var(--palacio-txt-negro);
+        font-size: 30px;
+        margin-bottom: 30px;
+        margin-top: 30px;
+    }
+
+    .palacio-container-alto {
+        height: 770px;
+    }
+
+    .btn-inicio {
+        width: 100%;
+        background-color: var(--palacio-txt-negro); 
+        color: var(--palacio-color-blanco); 
+        margin-top: 3%;
+    }
+
+    .btn-inicio:hover {
+        background-color: var(--palacio-txt-negro); 
+        color: var(--palacio-color-blanco);
+    }
+
+    .palacio-modal {
+        max-width: 800px;
+    }
+
+    /* .palacio-modal .modal-content{
+        height: 770px;
+    } */
+
+    .palacio-btn-elige {
+        background-color: var(--palacio-color-amarillo);
+        width: 300px;
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .palacio-img-inicio {
+        margin-top: 3%;
+    }
+
+    .palacio-btn-regresar {
+        color: #333333;
+        background: none;
+        border-radius: 0px;
+        border-color: #ebb349;
+        width: 200px;
+        font-size: 12px; 
+    }
+
+    .palacio-btn-regresar:hover {
+        border: 2px solid var(--palacio-color-amarillo);
+    }
+
+    .palacio-contenedor-imagenes-resultado {
+        margin-top: 3%;
+        margin-bottom: 3%;
+    }
+
+    .palacio-btn-inicio {
+        width: 100%;
+    }
+
+    .palacio-banner-img {
+        width : 100%;
+        height: 440px;
+        object-fit: cover;
+    }
+
+    .palacio-cont-respuesta {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 2%;
+    }
+
+    .palacio-cont-respuesta .palacio-end {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 0 0 3% 0;
+    }
+
+    .palacio-cont-respuesta .palacio-start {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 3% 0 0 0;
+    }
+
+    .centrar-modal {
+        display:flex;
+        width:100vw;
+        height:100vh;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .palacio-imagenes-resultado {
+        width: 90%;
+        margin: auto;
+    }
+
+    @media (min-width: 768px) {
+        .palacio-btn-elige {
+            width: 160px;
+            height: 160px;
+        }
+
+        .btn-inicio {
+            max-width: 250px;
+        }
+
+        .modal-content {
+            max-height: 350px;
+        }
+
+        .modal.show .modal-dialog {
+            margin-top: 0;
+        }
+
+        .palacio-img-inicio {
+            margin-top: 0;
+        }
+
+        .palacio-contenedor-imagenes-resultado {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .palacio-container-alto {
+            height: auto;
+        }
+
+        /* .palacio-modal .modal-content {
+            height: auto;
+        } */
+
+        .palacio-btn-inicio {
+            width: 250px;
+        }
+
+        .palacio-banner-img {
+            width : 150%;
+            height: auto;
+            object-fit: none;
+        }
+
+        .palacio-generos {
+            margin-right: 3%;
+        }
+
+        .palacio-cont-respuesta {
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+        }
+
+        .palacio-cont-respuesta .palacio-end {
+            display: flex;
+            justify-content: end;
+            margin: 0 3% 0 0;
+        }
+
+        .palacio-cont-respuesta .palacio-start {
+            display: flex;
+            justify-content: start;
+            margin: 0 0 0 3%;
+        }
+
+        .palacio-cont-respuesta .palacio-center {
+            display: flex;
+            justify-content: center;
+        }
+
+        .palacio-resultado {
+            margin-left: 3%;
+        }
+
+        .palacio-imagenes-resultado {
+            width: 100%;
+        }
+
+        .centrar-modal {
+            display:block;
+            width:auto;
+            height:auto;
+            align-items: initial;
+            justify-content: initial;
+        }
+    }
+
+</style>
+<body>
+    <section class="container palacio-container-alto">
+        <div class="col-12 d-flex flex-wrap">
+            <div class="col-12 col-md-6">
+                <h4 class="col-12">MI ESTILO <br>MI FUTURO</h4>
+                <p class="col-12 col-md-8">Resuelve este quiz y descubre cuales son aquellos aspectos que definen tu idea del futuro, y que por ello forman ya parte de tu estilo único.</p>
+                 <!-- Button trigger modal -->
+                 <button type="button" class="btn palacio-btn-inicio" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color: var(--palacio-txt-negro); color: var(--palacio-color-blanco); border-radius:0px; font-size: 12PX; margin-top: 0px; margin-bottom: 0px; ">DESCUBRIR</button>
+            </div>
+            <div class="col-12 col-md-6 d-flex palacio-img-inicio">
+                <div class="d-flex justify-content-center align-items-center">
+                    <img class="palacio-banner-img" src="./quiz-image.jpg" alt="" srcset="">
+                </div>
+            </div>
+        </div>
+        <!-- Button trigger modal -->
+    </section>
+
+    <section>    
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: var(--palacio-color-blanco);">
+            <div class="modal-dialog palacio-modal centrar-modal">
+                <div class="modal-content" style="border-top: 3px solid var(--palacio-color-amarillo); border-radius: 5px; margin-top: 1px;">
+                    <div class="modal-header" style="border-bottom: none; margin-bottom: 0px; padding-bottom: 0px;">
+                        <div class="d-flex flex-wrap">
+                            <h5 class="modal-title col-12" id="exampleModalLabel" style="color: var(--palacio-color-amarillo);">QUIZ</h5>
+                            <h5 class="col-12">MI ESTILO DEL FUTURO</h5>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- GENEROS -->
+                        <div id="palacioGeneros">
+                            <h6 class="col-12 text-center">¿CUÁL ES TU GÉNERO?</h6>
+                            <div class="palacio-cont-respuesta">
+                                <div class="palacio-end">
+                                    <div id="hombre" class="col-6 palacio-btn-elige text-center text-capitalize">
+                                        <a>
+                                            HOMBRE
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="palacio-start">
+                                    <div id="mujer" class="col-6 palacio-btn-elige text-center text-capitalize">
+                                        <a>
+                                            MUJER
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PLANES -->
+                        <div id="palacioPlan" style="display: none;">
+                            <h6 class="col-12 text-center">¿CUÁL ES TU PLAN FAVORITO DE FIN DE SEMANA?</h6>
+                            <div class="palacio-cont-respuesta">
+                                <div class="palacio-end">
+                                    <div id="palacioMaraton" class="col-6 palacio-btn-elige text-center text-capitalize">
+                                        <a>
+                                            UN MARATÓN DE MINECRAFT
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="palacio-center">
+                                    <div id="palacioSalida" class="col-6 palacio-btn-elige text-center text-capitalize">
+                                        <a>
+                                            UNA SALIDA <br>DE HICKING
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="palacio-start">
+                                    <div id="palacioExpo" class="col-6 palacio-btn-elige text-center text-capitalize">
+                                        <a>
+                                            LA EXPO <br>DEL MOMENTO
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 palacio-cont-respuesta">
+                                <button id="returnGenero" type="button" class="btn palacio-btn-regresar">Regresar</button>
+                            </div>
+                        </div>
+                        
+                        <!-- INSPIRACIÓN -->
+                        <div id="palacioInspiracion" style="display: none;">
+                            <h6 class="col-12 text-center">¿A DÓNDE ACUDES MÁS PRONTO PARA TENER INSPIRACIÓN?</h6>
+                            <div class="palacio-cont-respuesta">
+                                <div class="palacio-end">
+                                    <div id="palacioChat" class="col-6 palacio-btn-elige text-center text-capitalize">
+                                        <a>
+                                            CHAT GPT
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="palacio-center">
+                                    <div id="palacioPaseo" class="col-6 palacio-btn-elige text-center text-capitalize">
+                                        <a>
+                                            UN PASEO <br> POR EL BOSQUE
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="palacio-start">
+                                    <div id="palacioInfluencers" class="col-6 palacio-btn-elige text-center text-capitalize">
+                                        <a>
+                                            INFLUENCERS
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 palacio-cont-respuesta">
+                                <button id="returnPlanes" type="button" class="btn palacio-btn-regresar">Regresar</button>
+                            </div>
+                        </div>
+
+                        <!-- PERSONAJES -->
+                        <div id="palacioPersonajes" style="display: none;">
+                            <h6 class="col-12 text-center">¿CON CUÁL DE ESTOS PERSONAJES TE SIENTES MÁS IDENTIFICADO?</h6>
+                            <div class="palacio-cont-respuesta">
+                                <div class="palacio-end">
+                                    <div id="palacioJobs" class="col-6 palacio-btn-elige text-center text-capitalize">
+                                        <a>
+                                            STEVE JOBS
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="palacio-center">
+                                    <div id="palacioGreta" class="col-6 palacio-btn-elige text-center text-capitalize">
+                                        <a>
+                                            GRETA THUNBERG
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="palacio-start">
+                                    <div id="palacioKilie" class="col-6 palacio-btn-elige text-center text-capitalize">
+                                        <a>
+                                            KILIE JENNER
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 palacio-cont-respuesta">
+                                <button id="returnInspiracion" type="button" class="btn palacio-btn-regresar">Regresar</button>
+                            </div>
+                        </div>
+
+                        <!-- COMPAÑIA -->
+                        <div id="palacioCompania" style="display: none;">
+                            <h6 class="col-12 text-center">DE LOS SIGUIENTES: ¿CUÁL CONSIDERARÍAS QUE ES LA COMPAÑÍA PERFECTA?</h6>
+                            <div class="palacio-cont-respuesta">
+                                <div class="palacio-end">
+                                    <div id="palacioRobot" class="col-6 palacio-btn-elige text-center text-capitalize">
+                                        <a>
+                                            NAO, EL ROBOT <br> HUMANOIDE
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="palacio-center">
+                                    <div id="palacioPerritos" class="col-6 palacio-btn-elige text-center text-capitalize">
+                                        <a>
+                                            PERRITOS
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="palacio-start">
+                                    <div id="palacioTu" class="col-6 palacio-btn-elige text-center text-capitalize">
+                                        <a>
+                                            TÚ Y SÓLO TÚ
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 palacio-cont-respuesta">
+                                <button id="returnPersonajes" type="button" class="btn palacio-btn-regresar">Regresar</button>
+                            </div>
+                        </div>
+
+                        <!-- PENSAR -->
+                        <div id="palacioPensar" style="display: none;">
+                            <h6 class="col-12 text-center">DE ESTAS CUESTIONES, ¿CUÁL ES LA QUE SUELES PENSAR MÁS?</h6>
+                            <div class="palacio-cont-respuesta">
+                                <div class="palacio-end">
+                                    <div id="palacioIa" class="col-6 palacio-btn-elige text-center text-capitalize">
+                                        <a>
+                                            LA AUTONOMÍA <br> DE LA IA
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="palacio-center">
+                                    <div id="palacioClima" class="col-6 palacio-btn-elige text-center text-capitalize">
+                                        <a>
+                                            EL CAMBIO <br> CLIMÁTICO
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="palacio-start">
+                                    <div id="palacioSalud" class="col-6 palacio-btn-elige text-center text-capitalize">
+                                        <a>
+                                            SALUD Y <br> BIENESTAR
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 palacio-cont-respuesta">
+                                <button id="returnCompania" type="button" class="btn palacio-btn-regresar">Regresar</button>
+                            </div>
+                        </div>
+
+                        <!-- RESULTADO 1 -->
+                        <div id="palacioResultado1" style="display: none;">
+                            <div class="d-flex flex-wrap">
+                                <div class="col-12 col-md-9">
+                                    <div style="border-left: 2px solid var(--palacio-color-gris); padding-left: 3%;">
+                                        <div class="col-12" style="margin-bottom: 1%;">
+                                            <h6 class="text-capitalize col-12">RESULTADO <br><span style="color: var(--palacio-color-amarillo);">TECHIE</span></h6>
+                                        </div>
+                                        <p class="palacio-p-font-size">Te asombra la tecnología y te informas para descubrir cómo ponerla al servicio de tu estilo de vida. La utilizas como un recurso para conectar con los demás, para entretenimiento y te genera una gran expectativa sobre los avances del futuro.</p>
+                                        <a class="palacio-p-font-size" href="http://" target="_blank" rel="noopener noreferrer">Comparte tu resultado:</a>
+                                        <div class="col-12 d-flex">
+                                            <div class="" style="margin: 0 3%;">
+                                                <a href="https://www.facebook.com/ElPalaciodeHierro/?locale=es_LA">
+                                                    <img src="./fb.jpeg" alt="" srcset="" width="20">
+                                                </a>
+                                            </div>
+                                            <div class="" style="margin: 0 3%;">
+                                                <a href="https://twitter.com/palaciohierro">
+                                                    <img src="./twitter.png" alt="" srcset="" width="20">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 palacio-contenedor-imagenes-resultado">
+                                    <div class="d-flex">
+                                        <img id="imgRespMujer1" src="./TECHIE-woman.jpg" alt="" class=" palacio-imagenes-resultado">
+                                        <img id="imgRespHombre1" src="./TECHIE-man.jpg" alt="" class=" palacio-imagenes-resultado" style="display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-center">
+                                <button id="returnResultado1" type="button" class="btn palacio-btn-regresar">Volver a comenzar</button>
+                            </div>
+                        </div>
+
+                        <!-- RESULTADO 2 -->
+                        <div id="palacioResultado2" style="display: none;">
+                            <div class="d-flex flex-wrap">
+                                <div class="col-12 col-md-9">
+                                    <div style="border-left: 2px solid var(--palacio-color-gris); padding-left: 3%;">
+                                        <div class="col-12" style="margin-bottom: 1%;">
+                                            <h6 class="text-capitalize col-12">RESULTADO <br><span style="color: var(--palacio-color-amarillo);">ECO-FRIENDLY</span></h6>
+                                        </div>
+                                        <p class="palacio-p-font-size">Te preocupa el destino del mundo y el impacto de tus acciones sobre él. Reflexionas siempre sobre qué puedes hacer para contribuir a mejores posibilidades y has encontrado el modo de asimilar a tu estilo (lo que vistes, comes, practicas y tu entretenimiento) diversos modos de ayudar al planeta.</p>
+                                        <a class="palacio-p-font-size" href="http://" target="_blank" rel="noopener noreferrer">Comparte tu resultado:</a>
+                                        <div class="col-12 d-flex">
+                                            <div class="" style="margin: 0 3%;">
+                                                <a href="https://www.facebook.com/ElPalaciodeHierro/?locale=es_LA">
+                                                    <img src="./fb.jpeg" alt="" srcset="" width="20">
+                                                </a>
+                                            </div>
+                                            <div class="" style="margin: 0 3%;">
+                                                <a href="https://twitter.com/palaciohierro">
+                                                    <img src="./twitter.png" alt="" srcset="" width="20">
+                                                </a>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 palacio-contenedor-imagenes-resultado">
+                                    <div class="d-flex palacio-imagenes-resultado ">
+                                        <img id="imgRespMujer2" src="./ECO-FRIENDLY-woman.jpg" alt="" class=" palacio-imagenes-resultado">
+                                        <img id="imgRespHombre2" src="./ECO-FRIENDLY-man.jpg" alt="" class=" palacio-imagenes-resultado" style="display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-center">
+                                <button id="returnResultado2" type="button" class="btn palacio-btn-regresar">Volver a comenzar</button>
+                            </div>
+                        </div>
+
+                        <!-- RESULTADO 3 -->
+                        <div id="palacioResultado3" style="display: none;">
+                            <div class="d-flex flex-wrap">
+                                <div class="col-12 col-md-9">
+                                    <div style="border-left: 2px solid var(--palacio-color-gris); padding-left: 3%;">
+                                        <div class="col-12" style="margin-bottom: 1%;">
+                                            <h6 class="text-capitalize col-12">RESULTADO <br><span style="color: var(--palacio-color-amarillo);">AVANT GARDE</span></h6>
+                                        </div>
+                                        <p class="palacio-p-font-size">Para ti, el futuro es ahora. No esperas a lo que venga, sino que lo generas hoy mismo, para que esas acciones tengan un impacto positivo en el futuro que imaginas para ti. No te pierdes lo último y lo más novedoso. Entiendes los avances tecnológicos como un aliado de tu estilo de vida.</p>
+                                        <a class="palacio-p-font-size" href="https://twitter.com/palaciohierro" target="_blank" rel="noopener noreferrer">Comparte tu resultado:</a>
+                                        <div class="col-12 d-flex">
+                                            <div class="" style="margin: 0 3%;">
+                                                <a href="https://www.facebook.com/ElPalaciodeHierro/?locale=es_LA">
+                                                    <img src="./fb.jpeg" alt="" srcset="" width="20">
+                                                </a>
+                                            </div>
+                                            <div class="" style="margin: 0 3%;">
+                                                <a href="https://twitter.com/palaciohierro">
+                                                    <img src="./twitter.png" alt="" srcset="" width="20">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 palacio-contenedor-imagenes-resultado">
+                                    <div class="d-flex palacio-imagenes-resultado ">
+                                        <img id="imgRespMujer3" src="./AVANT-GARDE-woman.jpg" alt="" class=" palacio-imagenes-resultado">
+                                        <img id="imgRespHombre3" src="./AVANT-GARDE-man.jpg" alt="" class=" palacio-imagenes-resultado" style="display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-center">
+                                <button id="returnResultado3" type="button" class="btn palacio-btn-regresar">Volver a comenzar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Regresar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script>
+
+        let genero = ''
+
+        document.getElementById("palacioGeneros").style.display = "block";
+        document.getElementById("palacioPlan").style.display = "none";
+        document.getElementById("palacioInspiracion").style.display = "none";
+        document.getElementById("palacioPersonajes").style.display = "none";
+        document.getElementById("palacioCompania").style.display = "none";
+        document.getElementById("palacioPensar").style.display = "none";
+        document.getElementById("palacioResultado1").style.display = "none";
+
+        // Eventos para el botón hombre
+        document.getElementById("hombre").onclick = function() {
+            genero = 'hombre';
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "block";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+            // console.log("genero ",genero);
+        }
+
+        // Eventos para el botón Mujer
+        document.getElementById("mujer").onclick = function() {
+            genero = 'mujer';
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "block";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+            console.log("genero ",genero);
+        }
+
+        // Eventos para el apartado de Planes  
+        document.getElementById("palacioMaraton").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "block";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+        document.getElementById("palacioSalida").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "block";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+        document.getElementById("palacioExpo").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "block";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+
+        // Eventos para el apartado de Inspiración    
+        document.getElementById("palacioChat").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "block";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+        document.getElementById("palacioPaseo").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "block";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+        document.getElementById("palacioInfluencers").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "block";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+
+        // Eventos para el apartado de Personajes
+        document.getElementById("palacioJobs").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "block";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+        document.getElementById("palacioGreta").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "block";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+        document.getElementById("palacioKilie").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "block";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+
+        // Eventos para el apartado de Compañia
+        document.getElementById("palacioRobot").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "block";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+        document.getElementById("palacioPerritos").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "block";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+        document.getElementById("palacioTu").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "block";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+
+        // Eventos para el apartado de Pensar
+        document.getElementById("palacioIa").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "block";
+            generaRespuesta(genero);
+        }
+        document.getElementById("palacioClima").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "block";
+            generaRespuesta(genero);
+        }
+        document.getElementById("palacioSalud").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "block";
+            generaRespuesta(genero);
+        }
+
+        // Botones de regresar
+        document.getElementById("returnGenero").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "block";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+
+        document.getElementById("returnPlanes").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "block";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+
+        document.getElementById("returnInspiracion").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "block";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+
+        document.getElementById("returnPersonajes").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "block";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+
+        document.getElementById("returnCompania").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "block";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+
+        document.getElementById("returnCompania").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "none";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "block";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+
+        document.getElementById("returnResultado1").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "block";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado1").style.display = "none";
+        }
+
+        document.getElementById("returnResultado2").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "block";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado2").style.display = "none";
+        }
+
+        document.getElementById("returnResultado3").onclick = function() {
+            document.getElementById("palacioGeneros").style.display = "block";
+            document.getElementById("palacioPlan").style.display = "none";
+            document.getElementById("palacioInspiracion").style.display = "none";
+            document.getElementById("palacioPersonajes").style.display = "none";
+            document.getElementById("palacioCompania").style.display = "none";
+            document.getElementById("palacioPensar").style.display = "none";
+            document.getElementById("palacioResultado3").style.display = "none";
+        }
+
+        // Generar respuesta aleatoria
+        function generaRespuesta(genero) {
+            // console.log('Genero', genero);
+            if (genero === 'mujer') {
+                document.getElementById("imgRespMujer1").style.display = "block";
+                document.getElementById("imgRespHombre1").style.display = "none";
+                document.getElementById("imgRespMujer2").style.display = "block";
+                document.getElementById("imgRespHombre2").style.display = "none";
+                document.getElementById("imgRespMujer3").style.display = "block";
+                document.getElementById("imgRespHombre3").style.display = "none";
+            } else {
+                document.getElementById("imgRespMujer1").style.display = "none";
+                document.getElementById("imgRespHombre1").style.display = "block";
+                document.getElementById("imgRespMujer2").style.display = "none";
+                document.getElementById("imgRespHombre2").style.display = "block";
+                document.getElementById("imgRespMujer3").style.display = "none";
+                document.getElementById("imgRespHombre3").style.display = "block";
+            }
+
+            let inicio = 1
+            let final = 3
+
+            let respuesta = inicio + Math.floor(Math.random() * final);
+            // console.log(respuesta);
+            if (respuesta === 2) {
+                document.getElementById("palacioResultado1").style.display = "none";
+                document.getElementById("palacioResultado2").style.display = "block";
+                document.getElementById("palacioResultado3").style.display = "none";
+
+            } else if (respuesta === 3) {
+                document.getElementById("palacioResultado1").style.display = "none";
+                document.getElementById("palacioResultado2").style.display = "none";
+                document.getElementById("palacioResultado3").style.display = "block";
+            } else {
+                document.getElementById("palacioResultado1").style.display = "block";
+                document.getElementById("palacioResultado2").style.display = "none";
+                document.getElementById("palacioResultado3").style.display = "none";
+            }
+        }
+
+    </script>
+</body>
+</html>
